@@ -1,4 +1,3 @@
-import SqlEditor from "@/components/editor/sqleditor";
 import { NavBar } from "@/components/header/navbar";
 import Result from "@/components/result/result";
 import {
@@ -7,6 +6,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Sidebar } from "../components/sidebar/Sidebar";
+import { Editor } from "@/components/editor/editor";
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
         <div className="flex-1 flex flex-col gap-4 p-4 bg-background">
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={200} className="p-1">
-              <SqlEditor></SqlEditor>
+              <Editor></Editor>
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={500} className="mt-5">
