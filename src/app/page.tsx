@@ -18,11 +18,11 @@ export default function Home() {
         <Sidebar />
         <div className="flex-1 flex flex-col gap-4 p-4 bg-background">
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={200} className="p-1">
+            <ResizablePanel defaultSize={40} className="p-1">
               <Editor></Editor>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={500} className="mt-5">
+            <ResizablePanel defaultSize={60} className="mt-5">
               <Result></Result>
             </ResizablePanel>
           </ResizablePanelGroup>

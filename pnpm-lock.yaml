@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@codemirror/autocomplete':
+    specifier: 6.15.0
+    version: 6.15.0(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.1)(@lezer/common@1.2.1)
   '@codemirror/commands':
     specifier: ^6.3.3
     version: 6.3.3
@@ -14,6 +17,9 @@ dependencies:
   '@codemirror/state':
     specifier: ^6.4.1
     version: 6.4.1
+  '@codemirror/theme-one-dark':
+    specifier: ^6.1.2
+    version: 6.1.2
   '@codemirror/view':
     specifier: ^6.26.1
     version: 6.26.1
@@ -42,9 +48,6 @@ dependencies:
     specifier: ^5.24.0
     version: 5.24.0(@tanstack/react-query@5.22.2)(react@18.2.0)
   '@uiw/codemirror-theme-github':
-    specifier: ^4.21.25
-    version: 4.21.25(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.1)
-  '@uiw/codemirror-themes':
     specifier: ^4.21.25
     version: 4.21.25(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.1)
   '@uiw/react-codemirror':
