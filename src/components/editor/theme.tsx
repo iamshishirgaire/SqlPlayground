@@ -16,7 +16,7 @@ export const editorTheme = EditorView.theme({
   },
   ".cm-content": {
     fontFamily: "Menlo, Monaco, Lucida Console, monospace",
-    minHeight: "200px",
+    paddingTop: "1rem",
   },
   ".cm-tooltip": {
     borderRadius: "0.25rem",

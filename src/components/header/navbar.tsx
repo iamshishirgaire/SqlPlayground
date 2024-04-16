@@ -1,18 +1,9 @@
-import { DatabaseIcon, RefreshCwIcon, Sparkles } from "lucide-react";
+import { DatabaseIcon } from "lucide-react";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
-import DbConnection from "./dbConnection";
 import AiChat from "./aiChat";
-import Settings from "./setting";
+import DbConnection from "./dbConnection";
 import RefreshTables from "./refresh";
+import Settings from "./setting";
 export function NavBar({}) {
   return (
     <div className="flex h-[60px] items-center  gap-4 px-6">

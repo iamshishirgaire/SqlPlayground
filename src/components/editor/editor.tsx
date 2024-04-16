@@ -1,15 +1,16 @@
 "use client";
+import { useHasMounted } from "@/lib/hooks/use-has-mounted";
 import { PostgreSQL, sql } from "@codemirror/lang-sql";
 import { EditorView, keymap } from "@codemirror/view";
 import CodeMirror, { basicSetup } from "@uiw/react-codemirror";
 import { useTheme } from "next-themes";
-import { useHasMounted } from "@/lib/hooks/use-has-mounted";
 
-import { editorTheme, theme } from "./theme";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { PlayIcon } from "lucide-react";
 import { acceptCompletion } from "@codemirror/autocomplete";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
+import TabsList from "./tabs";
+import { editorTheme, theme } from "./theme";
 
 export const Editor = () => {
   const [query, setQuery] = useState("");
@@ -17,13 +18,14 @@ export const Editor = () => {
   const hasMounted = useHasMounted();
 
   if (!hasMounted) {
-    return <div className="bg-background  h-[93vh] relative" />;
+    return <div className="relative h-[93vh] bg-background" />;
   }
 
   return (
     <>
+      <TabsList></TabsList>
       <CodeMirror
-        height="60vh"
+        height="100vh"
         theme={resolvedTheme === "dark" ? theme.dark : theme.light}
         value={query}
         basicSetup={{
@@ -46,7 +48,7 @@ export const Editor = () => {
           keymap.of([
             {
               key: "Ctrl-Enter",
-              run: (e) => {
+              run: () => {
                 return true;
               },
             },
@@ -61,13 +63,16 @@ export const Editor = () => {
           }),
         ]}
       />
-      <div className="sticky bottom-10 mx-5 float-right">
+      <div className="sticky bottom-10 float-right mx-5">
         <Button
           size={"default"}
           className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 "
-          onClick={() => {}}
+          onClick={() => {
+            console.log(query);
+            toast.info(query);
+          }}
         >
-          <PlayIcon className="mr-1 h-4 w-4 text-white" />
+          <p className="text-white">Run Query</p>
         </Button>
       </div>
     </>
