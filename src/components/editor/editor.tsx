@@ -6,16 +6,44 @@ import CodeMirror, { basicSetup } from "@uiw/react-codemirror";
 import { useTheme } from "next-themes";
 
 import { acceptCompletion } from "@codemirror/autocomplete";
-import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import TabsList from "./tabs";
 import { editorTheme, theme } from "./theme";
+import {
+  useChatStore,
+  useConnectionStore,
+  useQueryStore,
+  useResultStore,
+} from "@/lib/store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { runQuery } from "@/lib/query";
+import { CopyButton } from "../copy-button";
 
 export const Editor = () => {
-  const [query, setQuery] = useState("");
+  const queryClient = useQueryClient();
+  const { query, setQuery } = useQueryStore((state) => state);
+  const { setResult } = useResultStore((state) => state);
+  const { connectionUrl, hasConnection } = useConnectionStore((state) => state);
+  const { setShowChat, showChat } = useChatStore((state) => state);
   const { resolvedTheme } = useTheme();
   const hasMounted = useHasMounted();
+  const { mutate, isPending } = useMutation({
+    mutationFn: runQuery,
+    onSuccess: (data: any) => {
+      console.log(data);
+      setResult(data);
+      queryClient.invalidateQueries({ queryKey: ["schema"] });
+    },
+    onError: (error: any) => {
+      console.log(error);
+      toast.error(`Error: ${error.message}`);
+    },
+  });
+  const executeQuery = () => {
+    if (query.trimEnd() === "" || !connectionUrl) return;
+    mutate({ query, connectionString: connectionUrl });
+  };
 
   if (!hasMounted) {
     return <div className="relative h-[93vh] bg-background" />;
@@ -47,8 +75,20 @@ export const Editor = () => {
           EditorView.lineWrapping,
           keymap.of([
             {
-              key: "Ctrl-Enter",
+              key: "Mod-Enter",
               run: () => {
+                if (hasConnection && query.trimEnd() !== "") {
+                  executeQuery();
+                }
+                return true;
+              },
+            },
+            {
+              key: "Mod-k",
+              run: () => {
+                if (hasConnection) {
+                  setShowChat(true);
+                }
                 return true;
               },
             },
@@ -66,10 +106,11 @@ export const Editor = () => {
       <div className="sticky bottom-10 float-right mx-5">
         <Button
           size={"default"}
+          disabled={isPending || query.trimEnd() === "" || !hasConnection}
           className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 "
           onClick={() => {
             console.log(query);
-            toast.info(query);
+            executeQuery();
           }}
         >
           <p className="text-white">Run Query</p>

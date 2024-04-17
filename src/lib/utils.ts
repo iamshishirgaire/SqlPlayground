@@ -8,7 +8,3 @@ export function cn(...inputs: ClassValue[]) {
 export function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
-export const capitalizeLastLetter = (word: string): number => {
-  return word.length;
-};

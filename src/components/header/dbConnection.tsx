@@ -1,12 +1,12 @@
 "use client";
-import { PlusIcon, ShieldCloseIcon, X } from "lucide-react";
+import { useConnectionStore } from "@/lib/store";
+import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -16,13 +16,20 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 export default function DbConnection() {
-  const [dbUrl, setDbUrl] = useState("");
+  const connectionUrl = useConnectionStore((state) => state.connectionUrl);
+  const setConnectionUrl = useConnectionStore(
+    (state) => state.setConnectionUrl,
+  );
+  const setHasConnection = useConnectionStore(
+    (state) => state.setHasConnection,
+  );
+
   return (
     <div>
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button
-            className="rounded-full size-10"
+            className="size-10 rounded-full"
             size={"icon"}
             variant="outline"
           >
@@ -34,15 +41,16 @@ export default function DbConnection() {
           <AlertDialogHeader>
             <AlertDialogTitle>Database Connection</AlertDialogTitle>
           </AlertDialogHeader>
-          <div className="flex gap-2 mb-6">
+          <div className="mb-6 flex gap-2">
             <Input
-              value={dbUrl}
+              value={connectionUrl}
               placeholder="postgres://user:password@localhost:5432/dbname"
               onChange={(e) => {
-                setDbUrl(e.target.value);
+                setConnectionUrl(e.target.value);
+                setHasConnection(true);
               }}
             ></Input>
-            <Button variant={"ghost"} onClick={() => setDbUrl("")}>
+            <Button variant={"ghost"} onClick={() => setConnectionUrl("")}>
               Reset
             </Button>
           </div>
