@@ -11,12 +11,15 @@ import {
 import { useResultStore } from "@/lib/store";
 
 export const ResultTable = () => {
-  const { columns, rows, rowCount, startTime } = useResultStore(
-    (state) => state,
-  );
+  const { columns, rows } = useResultStore((state) => state);
 
   return (
     <div className=" block h-[500px]  overflow-auto">
+      {rows.length === 0 && (
+        <div className="flex  items-center justify-center">
+          <p className="text-gray-500">No Result</p>
+        </div>
+      )}
       <Table>
         <TableHeader>
           <TableRow>
