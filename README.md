@@ -1,7 +1,7 @@
-## SQL PLayground (SQL-PG)
-# Highly inspired from Neon PLayground.
+# SQL PLayground (SQL-PG)
+## Highly inspired from Neon Playground.
 
-# Uses neon serverless driver to connect Neon Postgres Database directly from your browser.
+## Uses neon serverless driver to connect Neon Postgres Database directly from your browser.
 
 ## Tasks
 - [x]  Implement initial UI layout.
