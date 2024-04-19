@@ -67,7 +67,7 @@ export const Tables = ({ name, tables }: Props) => {
                               <span className="flex-1">
                                 {column.column_name}
                               </span>
-                              <span className="inline-flex items-center  whitespace-nowrap rounded-full bg-blue-600/30 px-2.5 py-0.5 text-xs ">
+                              <span className="inline-flex items-center  whitespace-nowrap rounded-full bg-blue-700/30 px-2.5 py-0.5 text-xs text-blue-700 dark:text-blue-200 ">
                                 {column.data_type}
                               </span>
                             </div>

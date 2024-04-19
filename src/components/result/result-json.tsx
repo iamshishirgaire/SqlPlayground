@@ -1,9 +1,12 @@
 "use client";
 import { useResultStore } from "@/lib/store";
-import ReactJson from "react-json-view";
+import { useTheme } from "next-themes";
+import { lazy } from "react";
+const LazyReactJson = lazy(() => import("react-json-view"));
 
 export const ResultJson = () => {
   const rows = useResultStore((state) => state.rows);
+  const theme = useTheme();
 
   return (
     <div className=" block h-[500px]  overflow-auto">
@@ -12,19 +15,22 @@ export const ResultJson = () => {
           <p className="text-gray-500">No Result</p>
         </div>
       )}
-      <div className="rounded-lg bg-background p-4">
-        <ReactJson
+      <div className="rounded-lg bg-background p-4 ">
+        <LazyReactJson
           style={{
             backgroundColor: "var(--bg-background)",
+            fontFamily: "monospace",
           }}
-          theme={"threezerotwofour"}
+          theme={
+            theme.theme === "light" ? "summerfruit:inverted" : "summerfruit"
+          }
           iconStyle="square"
           name={false}
           enableClipboard={false}
           displayDataTypes={false}
           displayObjectSize={false}
           src={rows}
-        ></ReactJson>
+        ></LazyReactJson>
       </div>
     </div>
   );

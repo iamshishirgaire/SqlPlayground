@@ -9,7 +9,9 @@
 - [x] Add lsp support for sql language.
 - [x] Implement dark mode.
 - [x] Add connection and querying support.
-- [ ] Implement schema preview in the sidebar. 
+- [x] Implement schema preview in the sidebar. 
+- [x] Persist state locally.
+- [x] Implement json and table view for result.
 - [ ] Optimize query result rendering.
 - [ ] Add tabs support.
 - [ ] Add onboarding guide.
