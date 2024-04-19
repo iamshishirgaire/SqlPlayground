@@ -1,17 +1,17 @@
 "use client";
+import { useResultModeStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 
 const ToggleButtonGroup = () => {
-  const [selectedOption, setSelectedOption] = useState<number>(1);
-
+  const { mode, setMode } = useResultModeStore((state) => state);
   const options = [
-    { id: 1, label: "Json" },
-    { id: 2, label: "Table" },
-  ];
+    { id: "JSON", label: "Json" },
+    { id: "TABLE", label: "Table" },
+  ] as const;
 
-  const handleOptionClick = (optionId: number) => {
-    setSelectedOption(optionId);
+  const handleOptionClick = (optionId: "JSON" | "TABLE") => {
+    setMode(optionId);
   };
 
   return (
@@ -20,9 +20,9 @@ const ToggleButtonGroup = () => {
         onClick={() => handleOptionClick(options[0].id)}
         className={cn(
           "rounded-l-md px-3 py-1 focus:outline-none",
-          selectedOption === options[0].id
+          mode === options[0].id
             ? "bg-hoverColor "
-            : "hover:bg-hoverColor bg-background",
+            : "bg-background hover:bg-hoverColor",
         )}
       >
         {options[0].label}
@@ -31,9 +31,9 @@ const ToggleButtonGroup = () => {
         onClick={() => handleOptionClick(options[1].id)}
         className={cn(
           "rounded-r-md px-3  py-1 focus:outline-none",
-          selectedOption === options[1].id
+          mode === options[1].id
             ? "bg-hoverColor"
-            : "hover:bg-hoverColor bg-background",
+            : "bg-background hover:bg-hoverColor",
         )}
       >
         {options[1].label}

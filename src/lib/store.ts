@@ -7,12 +7,19 @@ export type Query = {
 export type QueryActions = {
   setQuery: (query: string) => void;
 };
-export const useQueryStore = create<Query & QueryActions>((set) => ({
-  query: "SELECT * FROM person_table;",
-  setQuery: (query: string) => {
-    set({ query });
-  },
-}));
+export const useQueryStore = create<Query & QueryActions>()(
+  persist(
+    (set) => ({
+      query: "",
+      setQuery: (query: string) => {
+        set({ query });
+      },
+    }),
+    {
+      name: "query-storage",
+    },
+  ),
+);
 
 export type Result = {
   rows: any[];
@@ -24,15 +31,41 @@ export type ResultActions = {
   setResult: (result: Result) => void;
 };
 
-export const useResultStore = create<Result & ResultActions>((set) => ({
-  rows: [],
-  rowCount: 0,
-  columns: [],
-  startTime: 0,
-  setResult: (result) => {
-    set(result);
-  },
-}));
+export const useResultStore = create<Result & ResultActions>()(
+  persist(
+    (set) => ({
+      rows: [],
+      rowCount: 0,
+      columns: [],
+      startTime: 0,
+      setResult: (result: Result) => {
+        set(result);
+      },
+    }),
+    {
+      name: "result-storage",
+    },
+  ),
+);
+export type ResultMode = {
+  mode: "JSON" | "TABLE";
+};
+export type ResultModeActions = {
+  setMode: (mode: "JSON" | "TABLE") => void;
+};
+export const useResultModeStore = create<ResultMode & ResultModeActions>()(
+  persist(
+    (set) => ({
+      mode: "TABLE",
+      setMode: (mode: "JSON" | "TABLE") => {
+        set({ mode });
+      },
+    }),
+    {
+      name: "result-mode-storage",
+    },
+  ),
+);
 
 export type Connection = {
   connectionUrl: string;
@@ -43,17 +76,22 @@ export type ConnectionActions = {
   setHasConnection: (hasConnection: boolean) => void;
 };
 
-export const useConnectionStore = create<Connection & ConnectionActions>(
-  (set) => ({
-    connectionUrl: "",
-    hasConnection: false,
-    setConnectionUrl: (connectionUrl: string) => {
-      set({ connectionUrl });
+export const useConnectionStore = create<Connection & ConnectionActions>()(
+  persist(
+    (set) => ({
+      connectionUrl: "",
+      hasConnection: false,
+      setConnectionUrl: (connectionUrl: string) => {
+        set({ connectionUrl });
+      },
+      setHasConnection: (hasConnection: boolean) => {
+        set({ hasConnection });
+      },
+    }),
+    {
+      name: "connection-storage",
     },
-    setHasConnection: (hasConnection: boolean) => {
-      set({ hasConnection });
-    },
-  }),
+  ),
 );
 
 export type Chat = {
@@ -67,4 +105,18 @@ export const useChatStore = create<Chat & ChatActions>((set) => ({
   setShowChat: (showChat: boolean) => {
     set({ showChat });
   },
+}));
+
+interface EditorSchemaState {
+  schema: any;
+  tables: { label: any }[];
+  setSchema: (newSchema: any) => void;
+  setTables: (newTables: { label: any }[]) => void;
+}
+
+export const useEditorSchemaStore = create<EditorSchemaState>((set) => ({
+  schema: {},
+  tables: [],
+  setSchema: (newSchema: any) => set({ schema: newSchema }),
+  setTables: (newTables: { label: any }[]) => set({ tables: newTables }),
 }));

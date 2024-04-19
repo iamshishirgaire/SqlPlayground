@@ -5,22 +5,23 @@ import { EditorView, keymap } from "@codemirror/view";
 import CodeMirror, { basicSetup } from "@uiw/react-codemirror";
 import { useTheme } from "next-themes";
 
+import { runQuery } from "@/lib/query";
+import {
+  useChatStore,
+  useConnectionStore,
+  useEditorSchemaStore,
+  useQueryStore,
+  useResultStore,
+} from "@/lib/store";
 import { acceptCompletion } from "@codemirror/autocomplete";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import TabsList from "./tabs";
 import { editorTheme, theme } from "./theme";
-import {
-  useChatStore,
-  useConnectionStore,
-  useQueryStore,
-  useResultStore,
-} from "@/lib/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { runQuery } from "@/lib/query";
-import { CopyButton } from "../copy-button";
 
 export const Editor = () => {
+  const { schema, tables } = useEditorSchemaStore((state) => state);
   const queryClient = useQueryClient();
   const { query, setQuery } = useQueryStore((state) => state);
   const { setResult } = useResultStore((state) => state);
@@ -98,8 +99,8 @@ export const Editor = () => {
           sql({
             dialect: PostgreSQL,
             upperCaseKeywords: true,
-            // schema: editorSchema?.schema,
-            // tables: editorSchema?.tables,
+            schema: schema,
+            tables: tables,
           }),
         ]}
       />

@@ -1,4 +1,5 @@
 ## SQL PLayground (SQL-PG)
+# Highly inspired from Neon PLayground.
 
 # Uses neon serverless driver to connect Neon Postgres Database directly from your browser.
 
@@ -11,4 +12,5 @@
 - [ ] Implement schema preview in the sidebar. 
 - [ ] Optimize query result rendering.
 - [ ] Add tabs support.
+- [ ] Add onboarding guide.
 - [ ] Fix bugs.

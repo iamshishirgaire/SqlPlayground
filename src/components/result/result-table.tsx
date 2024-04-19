@@ -37,7 +37,6 @@ export const ResultTable = () => {
             </TableRow>
           ))}
         </TableBody>
-        {/* <TableBody className="top-[40px]">{JSON.stringify(rows)}</TableBody> */}
       </Table>
     </div>
   );
