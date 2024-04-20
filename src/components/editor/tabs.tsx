@@ -3,9 +3,16 @@ import { useTabsStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { Plus, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 function TabsList() {
   const { tabs, setTab } = useTabsStore((state) => state);
+  const { activeTabIndex } = useTabsStore((state) => state);
   useEffect(() => {
     if (tabs.length === 0) {
       setTab({
@@ -15,19 +22,30 @@ function TabsList() {
     }
   }, []);
   return (
-    <div className="h-[40px] w-[80vw] whitespace-nowrap  border bg-background transition-colors duration-300 lg:w-[80vw]">
+    <div className="h-[40px] w-[80vw] whitespace-nowrap  border border-border/30 bg-background transition-colors duration-300 lg:w-[80vw]">
       <div className="flex  items-center overflow-x-hidden overflow-y-hidden hover:scroll-m-3 hover:overflow-x-scroll">
         {tabs.map((tab) => (
           <Tab key={tab.id} name={tab.name} id={tab.id} active={tab.isActive} />
         ))}
-        <div
-          className="ms-2 flex size-6 items-center justify-center rounded-sm bg-hoverColor "
-          onClick={() => {
-            setTab({ name: `Untitled`, isActive: true });
-          }}
-        >
-          <Plus className="size-4"></Plus>
-        </div>
+        {activeTabIndex !== -1 && (
+          <div
+            className="ms-2 flex size-6 items-center justify-center rounded-sm bg-hoverColor "
+            onClick={() => {
+              setTab({ name: `Untitled`, isActive: true });
+            }}
+          >
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Plus className="size-4"></Plus>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>New Tab</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -26,6 +26,7 @@ export const Editor = () => {
   const queryClient = useQueryClient();
   const { query, setQuery } = useQueryStore((state) => state);
   const { activeTabIndex } = useTabsStore((state) => state);
+  const { setTab } = useTabsStore((state) => state);
   const { setResult } = useResultStore((state) => state);
   const { connectionUrl, hasConnection } = useConnectionStore((state) => state);
   const { setShowChat, showChat } = useChatStore((state) => state);
@@ -58,57 +59,84 @@ export const Editor = () => {
   return (
     <>
       <TabsList></TabsList>
-      <CodeMirror
-        height="100vh"
-        theme={resolvedTheme === "dark" ? theme.dark : theme.light}
-        value={query[activeTabIndex]}
-        basicSetup={{
-          defaultKeymap: false,
-        }}
-        placeholder="Write a SQL query..."
-        onChange={(value: string) => setQuery(value, activeTabIndex)}
-        extensions={[
-          editorTheme,
-          keymap.of([
-            {
-              key: "Tab",
-              win: "Tab",
-              run: (e) => {
-                return acceptCompletion(e);
-              },
-            },
-          ]),
-          EditorView.lineWrapping,
-          keymap.of([
-            {
-              key: "Mod-Enter",
-              run: () => {
-                if (hasConnection && query[activeTabIndex]?.trimEnd() !== "") {
-                  executeQuery();
-                }
-                return true;
-              },
-            },
-            {
-              key: "Mod-k",
-              run: () => {
-                if (hasConnection) {
-                  setShowChat(true);
-                }
-                return true;
-              },
-            },
-          ]),
-          basicSetup(),
+      <div>
+        {activeTabIndex !== -1 && (
+          <CodeMirror
+            height="100vh"
+            theme={resolvedTheme === "dark" ? theme.dark : theme.light}
+            value={query[activeTabIndex]}
+            basicSetup={{
+              defaultKeymap: false,
+            }}
+            placeholder="Write a SQL query..."
+            onChange={(value: string) => setQuery(value, activeTabIndex)}
+            extensions={[
+              editorTheme,
+              keymap.of([
+                {
+                  key: "Tab",
+                  win: "Tab",
+                  run: (e) => {
+                    return acceptCompletion(e);
+                  },
+                },
+              ]),
+              EditorView.lineWrapping,
+              keymap.of([
+                {
+                  key: "Mod-Enter",
+                  run: () => {
+                    if (
+                      hasConnection &&
+                      query[activeTabIndex]?.trimEnd() !== ""
+                    ) {
+                      executeQuery();
+                    }
+                    return true;
+                  },
+                },
+                {
+                  key: "Mod-k",
+                  run: () => {
+                    if (hasConnection) {
+                      setShowChat(true);
+                    }
+                    return true;
+                  },
+                },
+              ]),
+              basicSetup(),
 
-          sql({
-            dialect: PostgreSQL,
-            upperCaseKeywords: true,
-            schema: schema,
-            tables: tables,
-          }),
-        ]}
-      />
+              sql({
+                dialect: PostgreSQL,
+                upperCaseKeywords: true,
+                schema: schema,
+                tables: tables,
+              }),
+            ]}
+          />
+        )}
+        {activeTabIndex === -1 && (
+          <div className="h-[93vh] bg-background">
+            <div className="flex h-min  pt-20">
+              <div className="flex w-full flex-col items-center justify-center gap-3">
+                <p className="text-lg text-gray-400">
+                  Create a new tab to start writing queries.
+                </p>
+                <Button
+                  onClick={() => {
+                    setTab({ name: `Untitled`, isActive: true });
+                  }}
+                  className=""
+                  variant={"default"}
+                >
+                  Add Tab
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
       <div className="sticky bottom-10 float-right mx-5">
         <Button
           size={"default"}
