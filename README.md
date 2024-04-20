@@ -14,7 +14,12 @@
 - [x] Implement json and table view for result.
 - [ ] Optimize query result rendering.
 - [x] Add tabs support.
+- [ ] Fix schema accordian state in Sidebar. 
 - [ ] Add onboarding guide.
 - [ ] Add feature to analyze the query.
 - [ ] Integrate openAI chatbot. 
+- [ ] Internationalization.
+- [ ] Error Management (w Sentry).
+- [ ] RateLimit (w upstash).
+- [ ] Add analytics (w Posthog).
 - [ ] Fix bugs.
