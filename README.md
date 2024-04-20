@@ -2,7 +2,7 @@
 ## Highly inspired from Neon Playground.
 
 ## Uses neon serverless driver to connect Neon Postgres Database directly from your browser.
-
+  Try online - https://sql-playground-alpha.vercel.app/
 ## Tasks
 - [x]  Implement initial UI layout.
 - [x] Implement codemirror editor.
@@ -13,6 +13,8 @@
 - [x] Persist state locally.
 - [x] Implement json and table view for result.
 - [ ] Optimize query result rendering.
-- [ ] Add tabs support.
+- [x] Add tabs support.
 - [ ] Add onboarding guide.
+- [ ] Add feature to analyze the query.
+- [ ] Integrate openAI chatbot. 
 - [ ] Fix bugs.

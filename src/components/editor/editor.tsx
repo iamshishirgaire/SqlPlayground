@@ -12,6 +12,7 @@ import {
   useEditorSchemaStore,
   useQueryStore,
   useResultStore,
+  useTabsStore,
 } from "@/lib/store";
 import { acceptCompletion } from "@codemirror/autocomplete";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -24,6 +25,7 @@ export const Editor = () => {
   const { schema, tables } = useEditorSchemaStore((state) => state);
   const queryClient = useQueryClient();
   const { query, setQuery } = useQueryStore((state) => state);
+  const { activeTabIndex } = useTabsStore((state) => state);
   const { setResult } = useResultStore((state) => state);
   const { connectionUrl, hasConnection } = useConnectionStore((state) => state);
   const { setShowChat, showChat } = useChatStore((state) => state);
@@ -42,8 +44,11 @@ export const Editor = () => {
     },
   });
   const executeQuery = () => {
-    if (query.trimEnd() === "" || !connectionUrl) return;
-    mutate({ query, connectionString: connectionUrl });
+    if (query[activeTabIndex]?.trimEnd() === "" || !connectionUrl) return;
+    mutate({
+      query: query[activeTabIndex],
+      connectionString: connectionUrl,
+    });
   };
 
   if (!hasMounted) {
@@ -56,12 +61,12 @@ export const Editor = () => {
       <CodeMirror
         height="100vh"
         theme={resolvedTheme === "dark" ? theme.dark : theme.light}
-        value={query}
+        value={query[activeTabIndex]}
         basicSetup={{
           defaultKeymap: false,
         }}
         placeholder="Write a SQL query..."
-        onChange={(value: string) => setQuery(value)}
+        onChange={(value: string) => setQuery(value, activeTabIndex)}
         extensions={[
           editorTheme,
           keymap.of([
@@ -78,7 +83,7 @@ export const Editor = () => {
             {
               key: "Mod-Enter",
               run: () => {
-                if (hasConnection && query.trimEnd() !== "") {
+                if (hasConnection && query[activeTabIndex]?.trimEnd() !== "") {
                   executeQuery();
                 }
                 return true;
@@ -107,7 +112,11 @@ export const Editor = () => {
       <div className="sticky bottom-10 float-right mx-5">
         <Button
           size={"default"}
-          disabled={isPending || query.trimEnd() === "" || !hasConnection}
+          disabled={
+            isPending ||
+            query[activeTabIndex]?.trimEnd() === "" ||
+            !hasConnection
+          }
           className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 "
           onClick={() => {
             console.log(query);

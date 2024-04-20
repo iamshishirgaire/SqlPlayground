@@ -1,18 +1,20 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Query = {
-  query: string;
+export type QueryState = {
+  query: string[];
+  setQuery: (query: string, queryIndex: number) => void;
 };
-export type QueryActions = {
-  setQuery: (query: string) => void;
-};
-export const useQueryStore = create<Query & QueryActions>()(
+
+export const useQueryStore = create<QueryState>()(
   persist(
     (set) => ({
-      query: "",
-      setQuery: (query: string) => {
-        set({ query });
+      query: [],
+      setQuery: (query: string, queryIndex) => {
+        set((state) => {
+          state.query[queryIndex] = query;
+          return { query: state.query };
+        });
       },
     }),
     {
@@ -21,24 +23,22 @@ export const useQueryStore = create<Query & QueryActions>()(
   ),
 );
 
-export type Result = {
+export type ResultState = {
   rows: any[];
   rowCount: number;
   columns: string[];
   startTime: number;
-};
-export type ResultActions = {
-  setResult: (result: Result) => void;
+  setResult: (result: ResultState) => void;
 };
 
-export const useResultStore = create<Result & ResultActions>()(
+export const useResultStore = create<ResultState>()(
   persist(
     (set) => ({
       rows: [],
       rowCount: 0,
       columns: [],
       startTime: 0,
-      setResult: (result: Result) => {
+      setResult: (result: ResultState) => {
         set(result);
       },
     }),
@@ -47,13 +47,12 @@ export const useResultStore = create<Result & ResultActions>()(
     },
   ),
 );
-export type ResultMode = {
+export type ResultModeState = {
   mode: "JSON" | "TABLE";
-};
-export type ResultModeActions = {
   setMode: (mode: "JSON" | "TABLE") => void;
 };
-export const useResultModeStore = create<ResultMode & ResultModeActions>()(
+
+export const useResultModeStore = create<ResultModeState>()(
   persist(
     (set) => ({
       mode: "TABLE",
@@ -67,16 +66,14 @@ export const useResultModeStore = create<ResultMode & ResultModeActions>()(
   ),
 );
 
-export type Connection = {
+export type ConnectionState = {
   connectionUrl: string;
   hasConnection: boolean;
-};
-export type ConnectionActions = {
   setConnectionUrl: (connectionUrl: string) => void;
   setHasConnection: (hasConnection: boolean) => void;
 };
 
-export const useConnectionStore = create<Connection & ConnectionActions>()(
+export const useConnectionStore = create<ConnectionState>()(
   persist(
     (set) => ({
       connectionUrl: "",
@@ -94,25 +91,24 @@ export const useConnectionStore = create<Connection & ConnectionActions>()(
   ),
 );
 
-export type Chat = {
+export type ChatState = {
   showChat: boolean;
-};
-export type ChatActions = {
   setShowChat: (showChat: boolean) => void;
 };
-export const useChatStore = create<Chat & ChatActions>((set) => ({
+
+export const useChatStore = create<ChatState>((set) => ({
   showChat: false,
   setShowChat: (showChat: boolean) => {
     set({ showChat });
   },
 }));
 
-interface EditorSchemaState {
+export type EditorSchemaState = {
   schema: any;
   tables: { label: any }[];
   setSchema: (newSchema: any) => void;
   setTables: (newTables: { label: any }[]) => void;
-}
+};
 
 export const useEditorSchemaStore = create<EditorSchemaState>((set) => ({
   schema: {},
@@ -120,3 +116,51 @@ export const useEditorSchemaStore = create<EditorSchemaState>((set) => ({
   setSchema: (newSchema: any) => set({ schema: newSchema }),
   setTables: (newTables: { label: any }[]) => set({ tables: newTables }),
 }));
+
+export type TabsState = {
+  activeTabIndex: number;
+  setActiveTab: (activeTab: number) => void;
+  tabs: { id: number; name: string; isActive: boolean }[];
+  setTab: (newTab: { name: string; isActive: boolean }) => void;
+  delTab: (id: number) => void;
+};
+
+export const useTabsStore = create<TabsState>()(
+  persist(
+    (set) => ({
+      tabs: [],
+      activeTabIndex: 0,
+      setActiveTab: (activeTabId: number) => {
+        set((state) => {
+          state.activeTabIndex = activeTabId;
+          state.tabs.forEach((tab) => (tab.isActive = tab.id === activeTabId));
+          return { tabs: state.tabs };
+        });
+      },
+      setTab: (tab: { name: string; isActive: boolean }) => {
+        set((state) => {
+          const newTab = { id: state.tabs.length + 1, ...tab };
+          state.tabs.forEach((tab) => (tab.isActive = false));
+          state.activeTabIndex = newTab.id;
+          return { tabs: [...state.tabs, newTab] };
+        });
+      },
+      delTab: (id: number) => {
+        set((state) => {
+          if (state.tabs.length === 1) {
+            state.activeTabIndex = -1;
+            return { tabs: [] };
+          }
+          state.activeTabIndex = state.tabs[state.tabs.length - 1].id;
+          const filteredTabs = state.tabs.filter((tab) => tab.id !== id);
+          const lastTab = filteredTabs[filteredTabs.length - 1];
+          state.setActiveTab(lastTab.id);
+          return { tabs: filteredTabs };
+        });
+      },
+    }),
+    {
+      name: "tabs-storage",
+    },
+  ),
+);
