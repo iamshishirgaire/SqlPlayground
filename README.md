@@ -6,7 +6,7 @@
 ## Tasks
 - [x]  Implement initial UI layout.
 - [x] Implement codemirror editor.
-- [x] Add lsp support for sql language.
+- [x] Add autocompletions support for sql language.
 - [x] Implement dark mode.
 - [x] Add connection and querying support.
 - [x] Implement schema preview in the sidebar. 
