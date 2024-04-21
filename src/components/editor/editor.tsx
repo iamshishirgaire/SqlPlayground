@@ -45,9 +45,10 @@ export const Editor = () => {
     },
   });
   const executeQuery = () => {
-    if (query[activeTabIndex]?.trimEnd() === "" || !connectionUrl) return;
+    if (query[activeTabIndex]?.queryString?.trimEnd() === "" || !connectionUrl)
+      return;
     mutate({
-      query: query[activeTabIndex],
+      query: query[activeTabIndex]?.queryString,
       connectionString: connectionUrl,
     });
   };
@@ -64,7 +65,7 @@ export const Editor = () => {
           <CodeMirror
             height="100vh"
             theme={resolvedTheme === "dark" ? theme.dark : theme.light}
-            value={query[activeTabIndex]}
+            value={query[activeTabIndex]?.queryString}
             basicSetup={{
               defaultKeymap: false,
             }}
@@ -88,7 +89,7 @@ export const Editor = () => {
                   run: () => {
                     if (
                       hasConnection &&
-                      query[activeTabIndex]?.trimEnd() !== ""
+                      query[activeTabIndex]?.queryString?.trimEnd() !== ""
                     ) {
                       executeQuery();
                     }
@@ -142,7 +143,7 @@ export const Editor = () => {
           size={"default"}
           disabled={
             isPending ||
-            query[activeTabIndex]?.trimEnd() === "" ||
+            query[activeTabIndex]?.queryString?.trimEnd() === "" ||
             !hasConnection
           }
           className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 "

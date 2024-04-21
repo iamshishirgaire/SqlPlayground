@@ -2,7 +2,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type QueryState = {
-  query: string[];
+  query: {
+    queryString: string;
+    queryIndex: number;
+  }[];
   setQuery: (query: string, queryIndex: number) => void;
 };
 
@@ -12,7 +15,13 @@ export const useQueryStore = create<QueryState>()(
       query: [],
       setQuery: (query: string, queryIndex) => {
         set((state) => {
-          state.query[queryIndex] = query;
+          state.query[queryIndex].queryString = query;
+          return { query: state.query };
+        });
+      },
+      delQuery: (queryIndex: number) => {
+        set((state) => {
+          state.query.splice(queryIndex, 1);
           return { query: state.query };
         });
       },
@@ -122,6 +131,7 @@ export type TabsState = {
   setActiveTab: (activeTab: number) => void;
   tabs: { id: number; name: string; isActive: boolean }[];
   setTab: (newTab: { name: string; isActive: boolean }) => void;
+  setName: (name: string, id: number) => void;
   delTab: (id: number) => void;
 };
 
@@ -130,6 +140,16 @@ export const useTabsStore = create<TabsState>()(
     (set) => ({
       tabs: [],
       activeTabIndex: 0,
+      setName: (name: string, id: number) => {
+        set((state) => {
+          state.tabs.forEach((tab) => {
+            if (tab.id === id) {
+              tab.name = name;
+            }
+          });
+          return { tabs: state.tabs };
+        });
+      },
       setActiveTab: (activeTabId: number) => {
         set((state) => {
           state.activeTabIndex = activeTabId;
@@ -139,13 +159,24 @@ export const useTabsStore = create<TabsState>()(
       },
       setTab: (tab: { name: string; isActive: boolean }) => {
         set((state) => {
-          const newTab = { id: state.tabs.length + 1, ...tab };
+          const newTab = { id: state.tabs.length, ...tab };
           state.tabs.forEach((tab) => (tab.isActive = false));
           state.activeTabIndex = newTab.id;
+          //aslo add the query of that id
+          useQueryStore.setState((state) => {
+            state.query.push({ queryString: "", queryIndex: newTab.id });
+            return { query: state.query };
+          });
           return { tabs: [...state.tabs, newTab] };
         });
       },
       delTab: (id: number) => {
+        //also delete the query of that id
+
+        useQueryStore.setState((state) => {
+          let newQueries = state.query.filter((_, index) => index !== id);
+          return { query: newQueries };
+        });
         set((state) => {
           if (state.tabs.length === 1) {
             state.activeTabIndex = -1;
