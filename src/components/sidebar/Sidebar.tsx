@@ -41,7 +41,7 @@ export const Sidebar = () => {
       {hasConnection && isLoading ? (
         <div className="space-y-5">
           <div className="bg-element-active my-1.5 flex h-full w-full animate-pulse items-center justify-center rounded-md">
-            <Loader className="size-4 text-gray-600"></Loader>
+            <Loader className="size-4 animate-spin"></Loader>
           </div>
           <div className="bg-element-active w-fill my-1.5 h-4 max-w-28 animate-pulse rounded-md"></div>
         </div>

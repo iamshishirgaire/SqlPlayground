@@ -34,7 +34,7 @@ export const Tables = ({ name, tables }: Props) => {
   }
 
   return (
-    <Accordion className="text-sm" type="multiple">
+    <Accordion className="text-md" type="multiple">
       <AccordionItem value={name}>
         <AccordionTrigger className="my-1.5 flex items-center ">
           <TableIcon className="mr-1 h-4 w-4" />{" "}

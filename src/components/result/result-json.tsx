@@ -4,12 +4,24 @@ import { useTheme } from "next-themes";
 import { lazy } from "react";
 const LazyReactJson = lazy(() => import("react-json-view"));
 
-export const ResultJson = () => {
+export const ResultJson = ({
+  height,
+  width,
+}: {
+  height: number;
+  width: number;
+}) => {
   const rows = useResultStore((state) => state.rows);
   const theme = useTheme();
 
   return (
-    <div className=" block h-[500px]  overflow-auto">
+    <div
+      style={{
+        height: height,
+        width: width,
+      }}
+      className="flex flex-1 flex-col space-y-2 overflow-y-auto border-r-2 border-border/25 pb-10 pr-2 "
+    >
       {rows.length === 0 && (
         <div className="flex  items-center justify-center">
           <p className="text-gray-500">No Result</p>
