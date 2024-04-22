@@ -44,7 +44,7 @@ export const ResultTable = ({
             }}
             key={i}
           >
-            {column ?? ""}
+            {column}
           </div>
         ))}
       </div>
@@ -77,7 +77,7 @@ export const ResultTable = ({
                   }}
                   key={i}
                 >
-                  {(row[column] as string) ?? ""}
+                  {row[column].toLocaleString()}
                 </div>
               ))}
             </div>
