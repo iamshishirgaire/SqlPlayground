@@ -1,15 +1,6 @@
 "use client";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
-
 import { useResultStore } from "@/lib/store";
-
+import { FixedSizeList } from "react-window";
 export const ResultTable = ({
   height,
   width,
@@ -32,24 +23,67 @@ export const ResultTable = ({
           <p className="text-gray-500">No Result</p>
         </div>
       )}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {columns.map((column) => (
-              <TableHead key={column}>{column}</TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow key={index}>
-              {Object.keys(row).map((key) => (
-                <TableCell key={key}>{row[key].toString()}</TableCell>
+
+      <div
+        className="bg-hoverColor/15"
+        style={{
+          display: "flex",
+
+          flexDirection: "row",
+          paddingRight: "20px",
+          height: "60px",
+          paddingLeft: "20px",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        {columns.map((column, i) => (
+          <div
+            style={{
+              width: `${width / columns.length}px`,
+            }}
+            key={i}
+          >
+            {column}
+          </div>
+        ))}
+      </div>
+      <FixedSizeList
+        height={height}
+        itemCount={rows.length}
+        itemSize={50}
+        width={width - 20}
+      >
+        {({ index, style }) => {
+          const row = rows[index];
+          return (
+            <div
+              className="hover:bg-hoverColor/15"
+              style={{
+                ...style,
+                display: "flex",
+                flexDirection: "row",
+                paddingRight: "20px",
+                paddingLeft: "20px",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              key={index}
+            >
+              {columns.map((column, i) => (
+                <div
+                  style={{
+                    width: `${width / columns.length}px`,
+                  }}
+                  key={i}
+                >
+                  {row[column]}
+                </div>
               ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+            </div>
+          );
+        }}
+      </FixedSizeList>
     </div>
   );
 };
