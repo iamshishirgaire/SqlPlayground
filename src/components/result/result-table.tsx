@@ -16,7 +16,7 @@ export const ResultTable = ({
         height: height,
         width: width,
       }}
-      className="flex flex-col  space-y-2 overflow-y-auto border-r-2 border-border/25 pb-10 pr-2 "
+      className="flex  flex-col space-y-2 overflow-y-auto border-r-2 border-border/25 pb-10 pr-2"
     >
       {rows.length === 0 && (
         <div className="flex  items-center justify-center">
