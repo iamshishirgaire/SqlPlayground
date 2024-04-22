@@ -12,7 +12,7 @@
 - [x] Implement schema preview in the sidebar. 
 - [x] Persist state locally.
 - [x] Implement json and table view for result.
-- [ ] Optimize query result rendering.
+- [x] Optimize query result rendering.
 - [x] Add tabs support.
 - [ ] Fix schema accordian state in Sidebar. 
 - [ ] Add onboarding guide.
