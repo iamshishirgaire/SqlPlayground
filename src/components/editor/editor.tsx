@@ -35,12 +35,10 @@ export const Editor = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: runQuery,
     onSuccess: (data: any) => {
-      console.log(data);
       setResult(data);
       queryClient.invalidateQueries({ queryKey: ["schema"] });
     },
     onError: (error: any) => {
-      console.log(error);
       toast.error(`Error: ${error.message}`);
     },
   });
@@ -148,7 +146,6 @@ export const Editor = () => {
           }
           className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 "
           onClick={() => {
-            console.log(query);
             executeQuery();
           }}
         >

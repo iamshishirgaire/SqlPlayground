@@ -77,7 +77,12 @@ export const ResultTable = ({
                   }}
                   key={i}
                 >
-                  {row[column].toLocaleString()}
+                  {
+                    //check if the row is an object and is date
+                    typeof row[column] === "object" && row[column] !== null
+                      ? row[column].toString()
+                      : row[column]
+                  }
                 </div>
               ))}
             </div>

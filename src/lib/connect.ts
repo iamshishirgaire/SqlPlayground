@@ -249,7 +249,6 @@ export const connect = async ({
       editorSchema,
     };
   } catch (error) {
-    console.log("error", error);
     // @ts-ignore
     throw new Error(error);
   }
