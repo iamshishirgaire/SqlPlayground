@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import TabsList from "./tabs";
 import { editorTheme, theme } from "./theme";
+import { Loader, PlayIcon } from "lucide-react";
 
 export const Editor = () => {
   const { schema, tables } = useEditorSchemaStore((state) => state);
@@ -149,7 +150,13 @@ export const Editor = () => {
             executeQuery();
           }}
         >
-          <p className="text-white">Run Query</p>
+          <p className="text-white">
+            {isPending ? (
+              <Loader className="size-4 animate-spin"></Loader>
+            ) : (
+              <PlayIcon className="size-4"></PlayIcon>
+            )}
+          </p>
         </Button>
       </div>
     </>

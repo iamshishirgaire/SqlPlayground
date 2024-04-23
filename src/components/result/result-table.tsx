@@ -25,7 +25,7 @@ export const ResultTable = ({
       )}
 
       <div
-        className="bg-hoverColor/15"
+        className="bg-hoverColor/65 dark:bg-hoverColor/15"
         style={{
           display: "flex",
 
@@ -58,7 +58,7 @@ export const ResultTable = ({
           const row = rows[index];
           return (
             <div
-              className="hover:bg-hoverColor/15"
+              className="hover:bg-hoverColor/65 dark:hover:bg-hoverColor/15"
               style={{
                 ...style,
                 display: "flex",
@@ -81,7 +81,7 @@ export const ResultTable = ({
                     //check if the row is an object and is date
                     typeof row[column] === "object" && row[column] !== null
                       ? row[column].toString()
-                      : row[column]
+                      : row[column] ?? "-"
                   }
                 </div>
               ))}

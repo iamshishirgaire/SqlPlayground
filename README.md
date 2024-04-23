@@ -15,11 +15,11 @@
 - [x] Optimize query result rendering.
 - [x] Add tabs support.
 - [ ] Fix schema accordian state in Sidebar. 
+- [ ] RateLimit (w upstash).
 - [ ] Add onboarding guide.
 - [ ] Add feature to analyze the query.
 - [ ] Integrate openAI chatbot. 
 - [ ] Internationalization.
 - [ ] Error Management (w Sentry).
-- [ ] RateLimit (w upstash).
 - [ ] Add analytics (w Posthog).
 - [ ] Fix bugs.

@@ -162,7 +162,7 @@ export const useTabsStore = create<TabsState>()(
           const newTab = { id: state.tabs.length, ...tab };
           state.tabs.forEach((tab) => (tab.isActive = false));
           state.activeTabIndex = newTab.id;
-          //aslo add the query of that id
+          //also add the query of that id
           useQueryStore.setState((state) => {
             state.query.push({ queryString: "", queryIndex: newTab.id });
             return { query: state.query };
