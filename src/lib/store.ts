@@ -116,7 +116,7 @@ export type EditorSchemaState = {
   schema: any;
   tables: { label: any }[];
   setSchema: (newSchema: any) => void;
-  setTables: (newTables: { label: any }[]) => void;
+  setTables: (newTables: any) => void;
 };
 
 export const useEditorSchemaStore = create<EditorSchemaState>((set) => ({

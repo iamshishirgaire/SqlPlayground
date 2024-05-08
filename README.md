@@ -15,7 +15,6 @@
 - [x] Optimize query result rendering.
 - [x] Add tabs support.
 - [ ] Fix schema accordian state in Sidebar. 
-- [ ] RateLimit (w upstash).
 - [ ] Add onboarding guide.
 - [ ] Add feature to analyze the query.
 - [ ] Integrate openAI chatbot. 

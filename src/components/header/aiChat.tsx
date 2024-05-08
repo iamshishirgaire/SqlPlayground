@@ -14,7 +14,7 @@ function AiChat() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="rounded-full h-10" size={"icon"} variant={"outline"}>
+        <Button className="h-10 rounded-full" size={"icon"} variant={"outline"}>
           <Sparkles className="p-1"></Sparkles>
         </Button>
       </SheetTrigger>
@@ -26,9 +26,9 @@ function AiChat() {
             account and remove your data from our servers.
           </SheetDescription>
         </SheetHeader>
-        <div className="flex flex-col  w-full ">
+        <div className="flex w-full  flex-col ">
           <div className="border-b p-4">
-            <h2 className="font-semibold text-lg">Assistant</h2>
+            <h2 className="text-lg font-semibold">Assistant</h2>
           </div>
           <div className="flex-1 overflow-auto p-4">
             <div className="flex flex-col gap-2">

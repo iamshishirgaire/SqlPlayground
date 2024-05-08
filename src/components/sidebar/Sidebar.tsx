@@ -5,36 +5,41 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Functions } from "./functions";
 import { Tables } from "./tables";
-import { useEffect } from "react";
 import { Loader } from "lucide-react";
+import { useEffect } from "react";
 
 export const Sidebar = () => {
   const [connectionString] = useConnectionStore((state) => [
     state.connectionUrl,
   ]);
 
-  const schema = useEditorSchemaStore((state) => state.schema);
   const setSchema = useEditorSchemaStore((state) => state.setSchema);
+  const setTables = useEditorSchemaStore((state) => state.setTables);
   const hasConnection = useConnectionStore((state) => state.hasConnection);
 
-  useEffect(() => {
-    if (schema) {
-      setSchema(schema);
-    }
-  }, [hasConnection]);
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isSuccess } = useQuery({
     queryKey: ["schema"],
     queryFn: async () => {
       if (connectionString) {
-        return await connect({
+        const data = await connect({
           connectionString: connectionString,
         });
+        return data;
       } else {
         toast.error("Please add a connection first.");
       }
     },
+
     enabled: hasConnection,
   });
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data?.editorSchema.schema);
+
+      setSchema(data?.editorSchema.schema);
+      setTables(data?.editorSchema.tables);
+    }
+  }, [isSuccess]);
 
   return (
     <div className="flex flex-1 flex-col space-y-2 overflow-y-auto border-r-2 border-border/25 pr-2 ">
