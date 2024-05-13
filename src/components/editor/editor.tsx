@@ -21,6 +21,7 @@ import { Button } from "../ui/button";
 import TabsList from "./tabs";
 import { editorTheme, theme } from "./theme";
 import { Loader, PlayIcon } from "lucide-react";
+import { useEffect } from "react";
 
 export const Editor = () => {
   const { schema, tables } = useEditorSchemaStore((state) => state);
@@ -30,7 +31,7 @@ export const Editor = () => {
   const { setTab } = useTabsStore((state) => state);
   const { setResult } = useResultStore((state) => state);
   const { connectionUrl, hasConnection } = useConnectionStore((state) => state);
-  const { setShowChat, showChat } = useChatStore((state) => state);
+  const { setShowChat } = useChatStore((state) => state);
   const { resolvedTheme } = useTheme();
   const hasMounted = useHasMounted();
   const { mutate, isPending } = useMutation({
@@ -96,7 +97,7 @@ export const Editor = () => {
                   },
                 },
                 {
-                  key: "Mod-k",
+                  key: "Mod-m",
                   run: () => {
                     if (hasConnection) {
                       setShowChat(true);

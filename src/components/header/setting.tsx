@@ -2,24 +2,18 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  LanguagesIcon,
-  LucideIcon,
-  RotateCcw,
-  SettingsIcon,
-  SunMoon,
-} from "lucide-react";
+import { LanguagesIcon, RotateCcw, SettingsIcon, SunMoon } from "lucide-react";
+import React, { ReactElement } from "react";
+import { ModeToggle } from "../theme-toggle";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
@@ -30,7 +24,7 @@ export default function Settings() {
       <Dialog>
         <DialogTrigger asChild>
           <Button
-            className="rounded-full size-10"
+            className="size-10 rounded-full"
             size={"icon"}
             variant="outline"
           >
@@ -43,7 +37,7 @@ export default function Settings() {
             <DialogTitle>Settings</DialogTitle>
           </DialogHeader>
           <hr />
-          <div className="flex  flex-col mt-2">
+          <div className="mt-2  flex flex-col">
             <SettingComponent
               icon={<SunMoon className="size-5"></SunMoon>}
               title="Theme"
@@ -55,10 +49,8 @@ export default function Settings() {
               title="Language"
             >
               <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Button variant="ghost" className="rounded-md">
-                    English
-                  </Button>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost">English</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem>English </DropdownMenuItem>
@@ -73,9 +65,7 @@ export default function Settings() {
               icon={<RotateCcw className="size-5"></RotateCcw>}
               title="Reset Playground"
             >
-              <Button variant="ghost" className="rounded-md">
-                Reset
-              </Button>
+              <Button variant="ghost">Reset</Button>
             </SettingComponent>
           </div>
         </DialogContent>
@@ -83,9 +73,6 @@ export default function Settings() {
     </div>
   );
 }
-
-import React, { ReactElement } from "react";
-import { ModeToggle } from "../theme-toggle";
 
 function SettingComponent({
   title,
@@ -97,7 +84,7 @@ function SettingComponent({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex w-full justify-between items-center border-b-2 border-border/20 py-1">
+    <div className="flex w-full items-center justify-between border-b-2 border-border/20 py-1">
       <div className="flex gap-3">
         {icon}
         <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">

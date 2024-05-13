@@ -1,6 +1,6 @@
 import { DatabaseIcon } from "lucide-react";
 import Link from "next/link";
-import AiChat from "./aiChat";
+import { Chat } from "../chat/chat";
 import DbConnection from "./dbConnection";
 import RefreshTables from "./refresh";
 import Settings from "./setting";
@@ -12,14 +12,14 @@ export function NavBar({}) {
         href="#"
       >
         <DatabaseIcon className="h-6 w-6 text-blue-500" />
-        <span className="font-bold text-blue-500 inline-block">Playground</span>
+        <span className="inline-block font-bold text-blue-500">Playground</span>
       </Link>
       <div className="flex w-full gap-4">
         <DbConnection></DbConnection>
         <RefreshTables></RefreshTables>
         <Settings></Settings>
         <div className="ml-auto">
-          <AiChat></AiChat>
+          <Chat></Chat>
         </div>
       </div>
     </div>

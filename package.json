@@ -36,11 +36,13 @@
     "@uiw/react-codemirror": "^4.21.25",
     "@upstash/ratelimit": "1.1.1",
     "@upstash/redis": "1.29.0",
+    "ai": "^3.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.335.0",
     "next": "14.1.0",
     "next-themes": "^0.3.0",
+    "openai": "4.42.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hotkeys-hook": "^4.5.0",
@@ -53,6 +55,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.0",
+    "zod": "^3.23.7",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

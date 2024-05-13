@@ -34,8 +34,6 @@ export const Sidebar = () => {
   });
   useEffect(() => {
     if (isSuccess) {
-      console.log(data?.editorSchema.schema);
-
       setSchema(data?.editorSchema.schema);
       setTables(data?.editorSchema.tables);
     }
