@@ -17,7 +17,7 @@
 - [ ] Fix schema accordian state in Sidebar. 
 - [ ] Add onboarding guide.
 - [ ] Add feature to analyze the query.
-- [ ] Integrate openAI chatbot. 
+- [x] Integrate openAI chatbot. 
 - [ ] Internationalization.
 - [ ] Error Management (w Sentry).
 - [ ] Add analytics (w Posthog).
