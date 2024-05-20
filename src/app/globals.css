@@ -37,7 +37,7 @@
   }
 
   .dark {
-    --background: 240 14% 11%;
+    --background: 235 18.75% 12.55%;
     --foreground: 0 0% 98%;
 
     --card: 240 10% 3.9%;
@@ -64,7 +64,7 @@
     --border: 240 2% 17%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
-    --hovercolor: 217 19% 27%;
+    --hovercolor: 217 19% 21%;
   }
 }
 

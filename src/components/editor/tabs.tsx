@@ -46,7 +46,7 @@ function TabsList() {
   }, [hasRunEffect]);
 
   return (
-    <div className="h-[40px] w-[80vw] whitespace-nowrap  border border-border/30 bg-background transition-colors duration-300 lg:w-[80vw]">
+    <div className="h-[50px] w-[80vw] whitespace-nowrap  border border-border/30 bg-background transition-colors duration-300 lg:w-[80vw]">
       <div className="flex  items-center overflow-x-hidden overflow-y-hidden hover:scroll-m-3 hover:overflow-x-scroll">
         {tabs.map((tab) => (
           <Tab key={tab.id} name={tab.name} id={tab.id} active={tab.isActive} />
@@ -99,8 +99,8 @@ function Tab({
               setActiveTab(id);
             }}
             className={cn(
-              "group flex h-full  items-center justify-between gap-10 border-r-2 border-t-2 border-border/35 px-2 py-2 hover:bg-hoverColor",
-              active && "border-t-blue-500 bg-gray-100 px-1 dark:bg-gray-700 ",
+              "group m-1 flex h-full items-center  justify-between gap-10  border-b-2 border-border/35 px-2 py-2 hover:bg-hoverColor",
+              active && "border-blue-500 bg-gray-100 px-1 dark:bg-[#313131]",
             )}
           >
             <p className="max-w-24 select-none overflow-clip text-ellipsis text-sm hover:cursor-pointer">

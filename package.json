@@ -32,7 +32,9 @@
     "@tanstack/react-query": "^5.22.2",
     "@tanstack/react-query-devtools": "^5.24.0",
     "@types/react-window": "^1.8.8",
-    "@uiw/codemirror-theme-github": "^4.21.25",
+    "@uiw/codemirror-theme-github": "^4.22.1",
+    "@uiw/codemirror-theme-tokyo-night": "^4.22.1",
+    "@uiw/codemirror-theme-vscode": "4.22.1",
     "@uiw/react-codemirror": "^4.21.25",
     "@upstash/ratelimit": "1.1.1",
     "@upstash/redis": "1.29.0",
@@ -54,6 +56,7 @@
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "thememirror": "2.0.1",
     "vaul": "^0.9.0",
     "zod": "^3.23.7",
     "zustand": "^4.5.2"

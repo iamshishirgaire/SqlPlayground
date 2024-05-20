@@ -40,7 +40,7 @@ export const Sidebar = () => {
   }, [isSuccess]);
 
   return (
-    <div className="flex flex-1 flex-col space-y-2 overflow-y-auto border-r-2 border-border/25 pr-2 ">
+    <div className="flex flex-1 flex-col space-y-2 overflow-y-auto border-r-2  pr-2 ">
       {hasConnection && isLoading ? (
         <div className="space-y-5">
           <div className="bg-element-active my-1.5 flex h-full w-full animate-pulse items-center justify-center rounded-md">

@@ -15,21 +15,24 @@ export default function Home() {
       <div className="mx-auto w-full  border-b bg-background">
         <NavBar />
       </div>
-      <div className="flex flex-1">
-        <Sidebar />
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel defaultSize={20}>
+          <Sidebar />
+        </ResizablePanel>
+        <ResizableHandle withHandle />
 
-        <div className="flex flex-1 flex-col gap-4 bg-background p-4">
+        <ResizablePanel defaultSize={80}>
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={40} className="p-1">
+            <ResizablePanel defaultSize={20} className="p-0">
               <Editor></Editor>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={60} className="mt-5">
+            <ResizablePanel defaultSize={80} className="mt-5">
               <Result></Result>
             </ResizablePanel>
           </ResizablePanelGroup>
-        </div>
-      </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </div>
   );
 }

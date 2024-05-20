@@ -1,10 +1,10 @@
-import { oneDark } from "@codemirror/theme-one-dark";
 import { EditorView } from "@codemirror/view";
 import { githubLight } from "@uiw/codemirror-theme-github";
+import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
 
 export const theme = {
   light: githubLight,
-  dark: oneDark,
+  dark: tokyoNight,
 };
 
 export const editorTheme = EditorView.theme({

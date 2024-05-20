@@ -16,12 +16,11 @@ import {
 } from "@/lib/store";
 import { acceptCompletion } from "@codemirror/autocomplete";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Loader, PlayIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import TabsList from "./tabs";
 import { editorTheme, theme } from "./theme";
-import { Loader, PlayIcon } from "lucide-react";
-import { useEffect } from "react";
 
 export const Editor = () => {
   const { schema, tables } = useEditorSchemaStore((state) => state);
@@ -63,6 +62,7 @@ export const Editor = () => {
       <div>
         {activeTabIndex !== -1 && (
           <CodeMirror
+            className="m-0"
             height="100vh"
             theme={resolvedTheme === "dark" ? theme.dark : theme.light}
             value={query[activeTabIndex]?.queryString}
