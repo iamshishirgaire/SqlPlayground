@@ -4,6 +4,7 @@ import { PostgreSQL, sql } from "@codemirror/lang-sql";
 import { EditorView, keymap } from "@codemirror/view";
 import CodeMirror, { basicSetup } from "@uiw/react-codemirror";
 import { useTheme } from "next-themes";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 import { runQuery } from "@/lib/query";
 import {
@@ -59,85 +60,90 @@ export const Editor = () => {
   return (
     <>
       <TabsList></TabsList>
-      <div>
-        {activeTabIndex !== -1 && (
-          <CodeMirror
-            className="m-0"
-            height="100vh"
-            theme={resolvedTheme === "dark" ? theme.dark : theme.light}
-            value={query[activeTabIndex]?.queryString}
-            basicSetup={{
-              defaultKeymap: false,
-            }}
-            placeholder="Write a SQL query..."
-            onChange={(value: string) => setQuery(value, activeTabIndex)}
-            extensions={[
-              editorTheme,
-              keymap.of([
-                {
-                  key: "Tab",
-                  win: "Tab",
-                  run: (e) => {
-                    return acceptCompletion(e);
-                  },
-                },
-              ]),
-              EditorView.lineWrapping,
-              keymap.of([
-                {
-                  key: "Mod-Enter",
-                  run: () => {
-                    if (
-                      hasConnection &&
-                      query[activeTabIndex]?.queryString?.trimEnd() !== ""
-                    ) {
-                      executeQuery();
-                    }
-                    return true;
-                  },
-                },
-                {
-                  key: "Mod-m",
-                  run: () => {
-                    if (hasConnection) {
-                      setShowChat(true);
-                    }
-                    return true;
-                  },
-                },
-              ]),
-              basicSetup(),
+      {activeTabIndex !== -1 && (
+        <AutoSizer>
+          {({ height, width }) => {
+            return (
+              <CodeMirror
+                className="m-0 h-fit"
+                height={`${(height - 60).toString()}px`}
+                width={`${width.toString()}px`}
+                theme={resolvedTheme === "dark" ? theme.dark : theme.light}
+                value={query[activeTabIndex]?.queryString}
+                basicSetup={{
+                  defaultKeymap: false,
+                }}
+                placeholder="Write a SQL query..."
+                onChange={(value: string) => setQuery(value, activeTabIndex)}
+                extensions={[
+                  editorTheme,
+                  keymap.of([
+                    {
+                      key: "Tab",
+                      win: "Tab",
+                      run: (e) => {
+                        return acceptCompletion(e);
+                      },
+                    },
+                  ]),
+                  EditorView.lineWrapping,
+                  keymap.of([
+                    {
+                      key: "Mod-Enter",
+                      run: () => {
+                        if (
+                          hasConnection &&
+                          query[activeTabIndex]?.queryString?.trimEnd() !== ""
+                        ) {
+                          executeQuery();
+                        }
+                        return true;
+                      },
+                    },
+                    {
+                      key: "Mod-m",
+                      run: () => {
+                        if (hasConnection) {
+                          setShowChat(true);
+                        }
+                        return true;
+                      },
+                    },
+                  ]),
+                  basicSetup(),
 
-              sql({
-                dialect: PostgreSQL,
-                upperCaseKeywords: true,
-                schema: schema,
-                tables: tables,
-              }),
-            ]}
-          />
-        )}
-        {activeTabIndex === -1 && (
-          <div className="h-[93vh] bg-background">
-            <div className="flex h-min  pt-20">
-              <div className="flex w-full flex-col items-center justify-center gap-3">
-                <p className="text-lg text-gray-400">
-                  Create a new tab to start writing queries.
-                </p>
-                <Button
-                  onClick={() => {
-                    setTab({ name: `Untitled`, isActive: true });
-                  }}
-                  className=""
-                  variant={"default"}
-                >
-                  Add Tab
-                </Button>
-              </div>
+                  sql({
+                    dialect: PostgreSQL,
+                    upperCaseKeywords: true,
+                    schema: schema,
+                    tables: tables,
+                  }),
+                ]}
+              />
+            );
+          }}
+        </AutoSizer>
+      )}
+      {activeTabIndex === -1 && (
+        <div className="h-[10vh] bg-background">
+          <div className="flex h-min  pt-20">
+            <div className="flex w-full flex-col items-center justify-center gap-3">
+              <p className="text-lg text-gray-400">
+                Create a new tab to start writing queries.
+              </p>
+              <Button
+                onClick={() => {
+                  setTab({ name: `Untitled`, isActive: true });
+                }}
+                className=""
+                variant={"default"}
+              >
+                Add Tab
+              </Button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
       <div className="sticky bottom-10 float-right mx-5">
         <Button
           size={"default"}

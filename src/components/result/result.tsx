@@ -16,7 +16,6 @@ function Result() {
         </p>
         <ToggleButtonGroup></ToggleButtonGroup>
       </div>
-      <hr className="my-2" />
 
       <AutoSizer>
         {({ height, width }) => {

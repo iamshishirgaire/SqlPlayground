@@ -46,7 +46,7 @@ function TabsList() {
   }, [hasRunEffect]);
 
   return (
-    <div className="h-[50px] w-[80vw] whitespace-nowrap  border border-border/30 bg-background transition-colors duration-300 lg:w-[80vw]">
+    <div className=" h-[50px]  w-[80vw] whitespace-nowrap  border border-border/30 bg-background transition-colors duration-300 lg:w-[80vw]">
       <div className="flex  items-center overflow-x-hidden overflow-y-hidden hover:scroll-m-3 hover:overflow-x-scroll">
         {tabs.map((tab) => (
           <Tab key={tab.id} name={tab.name} id={tab.id} active={tab.isActive} />

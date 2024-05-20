@@ -19,15 +19,15 @@ export default function Home() {
         <ResizablePanel defaultSize={20}>
           <Sidebar />
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle />
 
         <ResizablePanel defaultSize={80}>
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={20} className="p-0">
+            <ResizablePanel defaultSize={60} className="p-0">
               <Editor></Editor>
             </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={80} className="mt-5">
+            <ResizableHandle />
+            <ResizablePanel defaultSize={40} className="mt-5">
               <Result></Result>
             </ResizablePanel>
           </ResizablePanelGroup>
